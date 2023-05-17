@@ -6,6 +6,8 @@ def start():
     symbol = 'a'
     return input_str, symbol, i
 
+letters='abcdefghijklmnopqrstuvwxyz'
+
 
 class ParseError(Exception):
     def __init__(self):
@@ -38,10 +40,9 @@ class MainClass():
             self.expression_round0()
         elif (symbol == '['):
             self.expression_square0()
-        elif symbol.isalpha():
+        elif self.letter():
             self.alphabet0()
-        else:
-            error()
+
 
     def expressioninner(self):
 
@@ -49,21 +50,17 @@ class MainClass():
             self.expression_round0()
         elif (symbol == '['):
             self.expression_square0()
-        elif symbol.isalpha():
+        elif self.letter():
             self.alphabetinner()
         else:
             error()
 
     def alphabet0(self):
+        read()
+        self.alphabet1()
 
-        if symbol.isalpha():
-            read()
-            self.alphabet1()
-        else:
-            error()
 
     def alphabetinner(self):
-
         read()
         self.alphabet2()
 
@@ -72,7 +69,7 @@ class MainClass():
         if (symbol == '+') or (symbol == '-') or (symbol == '/'):
             self.signs()
             self.expression()
-        elif (symbol == '(') or (symbol == '[') or (symbol.isalpha()):
+        elif (symbol == '(') or (symbol == '[') or (self.letter()):
             self.expression()
 
     def alphabet2(self):
@@ -80,7 +77,7 @@ class MainClass():
         if (symbol == '+') or (symbol == '-') or (symbol == '/'):
             self.signs()
             self.expression()
-        elif (symbol == '(') or (symbol == '[') or (symbol.isalpha()):
+        elif (symbol == '(') or (symbol == '[') or (self.letter()):
             self.expression()
         else:
             error()
@@ -93,10 +90,8 @@ class MainClass():
             self.expressioninner()
             if (symbol == ')'):
                 read()
-            elif (symbol == '*'):
-                print("Недопустимый символ")
-                error()
             else:
+                print('Скобка не закрыта')
                 error()
             self.expression_round1()
 
@@ -107,7 +102,7 @@ class MainClass():
             self.signs()
 
             self.expression_round2()
-        elif (symbol == '[') or (symbol.isalpha()):
+        elif (symbol == '[') or (self.letter()):
 
             self.expression_round2()
 
@@ -116,8 +111,10 @@ class MainClass():
         if (symbol == '['):
 
             self.expression_square0()
-        elif (symbol.isalpha()):
+        elif (self.letter()):
             self.alphabet0()
+        else:
+            error()
 
     def expression_square0(self):
 
@@ -126,10 +123,8 @@ class MainClass():
             self.expressioninner()
             if (symbol == ']'):
                 read()
-            elif (symbol == '*'):
-                print("Недопустимый символ")
-                error()
             else:
+                print("Скобка не закрыта")
                 error()
             self.expression_square1()
 
@@ -140,7 +135,7 @@ class MainClass():
             self.signs()
 
             self.expression_square2()
-        elif (symbol == '(') or (symbol.isalpha()):
+        elif (symbol == '(') or (self.letter()):
 
             self.expression_square2()
 
@@ -149,14 +144,21 @@ class MainClass():
         if (symbol == '('):
 
             self.expression_round0()
-        elif (symbol.isalpha()):
+        elif (self.letter()):
             self.alphabet0()
+        else:
+            error()
 
     # Знаки
     def signs(self):
+        read()
 
-        if (symbol == '+') or (symbol == '-') or (symbol == '/'):
-            read()
+
+    def letter(self):
+        if symbol in letters:
+            return 1
+        else:
+            return 0
 
 
 def main():
